@@ -257,7 +257,7 @@ def main():
             """
 
             futures[executor.submit(send_email, recipient, subject, body)] = recipient
-            time.sleep(4)
+            time.sleep(2)
 
         for future in as_completed(futures):
             future.result()
