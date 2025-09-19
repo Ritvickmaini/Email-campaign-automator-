@@ -231,7 +231,7 @@ def main():
 
     template = EMAIL_TEMPLATES[template_stage]
 
-    with ThreadPoolExecutor(max_workers=25) as executor:
+    with ThreadPoolExecutor(max_workers=20) as executor:
         futures = {}
         for row in rows:
             if len(row) < 2 or "@" not in row[1]:
@@ -257,7 +257,7 @@ def main():
             """
 
             futures[executor.submit(send_email, recipient, subject, body)] = recipient
-            time.sleep(10)
+            time.sleep(4)
 
         for future in as_completed(futures):
             future.result()
