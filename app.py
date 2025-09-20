@@ -12,13 +12,13 @@ from googleapiclient.discovery import build
 from google.oauth2.service_account import Credentials
 
 # ------------------ CONFIG ------------------
-SMTP_SERVER = "mail.artificialinteligencesummit.com"
+SMTP_SERVER = "285235.vps-10.com"
 SMTP_PORT = 465
-IMAP_SERVER = "mail.artificialinteligencesummit.com"
+IMAP_SERVER = "285235.vps-10.com"
 IMAP_PORT = 993
 
 SENDER_EMAIL = "mike@artificialinteligencesummit.com"
-SENDER_PASSWORD = "#ic$J+0gY0f~"
+SENDER_PASSWORD = "hydcr3hC~~ks0x8-"
 
 SHEET_NAME = "Email-Campaigns(IOM)"  # Google Sheet name
 TAB_NAME = "campaign-2"              # Tab name inside sheet
@@ -257,7 +257,6 @@ def main():
             """
 
             futures[executor.submit(send_email, recipient, subject, body)] = recipient
-            time.sleep(2)
 
         for future in as_completed(futures):
             future.result()
