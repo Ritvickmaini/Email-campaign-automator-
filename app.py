@@ -266,6 +266,35 @@ def main():
 
     print("🎯 Campaign stage updated and run completed.")
 
+def wait_until_ready(last_sent_str):
+    """Check if 24h passed since last timestamp, else wait."""
+    if not last_sent_str:  # first run (no timestamp yet)
+        return
+
+    last_sent = datetime.strptime(last_sent_str, "%Y-%m-%d %H:%M:%S")
+    now = datetime.now()
+    next_allowed = last_sent + timedelta(hours=24)
+
+    if now < next_allowed:
+        sleep_time = (next_allowed - now).total_seconds()
+        print(f"⏳ Last sent at {last_sent}. Waiting {sleep_time/3600:.2f} hours...")
+        time.sleep(sleep_time)
+    else:
+        print("✅ 24h already passed, continuing immediately...")
 
 if __name__ == "__main__":
-    main()
+    while True:
+        rows, spreadsheet_id = get_sheet_data()
+        template_stage, last_sent_str = get_campaign_stage(spreadsheet_id)
+
+        if template_stage >= len(EMAIL_TEMPLATES):
+            print("✅ All templates sent. Campaign finished. Exiting.")
+            break
+
+        # --- Wait until 24h passed ---
+        wait_until_ready(last_sent_str)
+
+        # --- Run this stage ---
+        main()
+
+
