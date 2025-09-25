@@ -288,8 +288,9 @@ if __name__ == "__main__":
         template_stage, last_sent_str = get_campaign_stage(spreadsheet_id)
 
         if template_stage >= len(EMAIL_TEMPLATES):
-            print("✅ All templates sent. Campaign finished. Exiting.")
-            break
+            print("✅ All templates sent. Campaign finished. Sleeping 24 hr....")
+            time.sleep(24 * 3600) # sleep 24 hours
+            continue  # re-check after 24h
 
         # --- Wait until 24h passed ---
         wait_until_ready(last_sent_str)
